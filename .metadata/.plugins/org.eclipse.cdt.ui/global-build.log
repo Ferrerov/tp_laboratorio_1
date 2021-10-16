@@ -1,0 +1,6 @@
+19:05:34 **** Rebuild of configuration Debug for project TP_[1] - FERRERO VALENTIN ****
+Info: Internal Builder is used for build
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\ingresoDeDatos.o" "..\\src\\ingresoDeDatos.c" 
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\TP_[1] - FERRERO VALENTIN.o" "..\\src\\TP_[1] - FERRERO VALENTIN.c" 
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\funciones.o" "..\\src\\funciones.c" 
+gcc -o "TP_[1] - FERRERO VALENTIN.exe" "src\\TP_[1] - FERRERO VALENTIN.o" "src\\funciones.o" "src\\ingresoDeDatos.o" 
