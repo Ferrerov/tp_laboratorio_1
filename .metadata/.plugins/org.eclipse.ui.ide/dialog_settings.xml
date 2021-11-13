@@ -7,10 +7,20 @@
 		<item key="WizardProjectsImportPage.STORE_CLOSE_CREATED_PROJECTS_ID" value="false"/>
 		<item key="WizardProjectsImportPage.STORE_HIDE_CONFLICTING_PROJECTS_ID" value="false"/>
 		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
+			<item value="C:\Users\valen\Desktop\UTN\1° Cuatrimestre\Programacion\Eclipse\TP4"/>
+			<item value="C:\Users\valen\Desktop\UTN\1° Cuatrimestre\Programacion\Eclipse\TP3\eclipse_tp3_v3\eclipse_tp3_v3\tp3_windows"/>
+			<item value="C:\Users\valen\Downloads\TP3\eclipse_tp3_v3\eclipse_tp3_v3\tp3_windows"/>
+			<item value="C:\Users\valen\Downloads\parcialLab1-master\parcialLab1-master\primerParcialLabo"/>
 			<item value="C:\Users\valen\Desktop\tp_laboratorio_1-master (1)\tp_laboratorio_1-master"/>
 		</list>
 		<list key="WizardProjectsImportPage.STORE_ARCHIVES">
 			<item value=""/>
 		</list>
+	</section>
+	<section name="SmartImportWizard">
+		<item key="SmartImportRootWizardPage.STORE_HIDE_ALREADY_OPEN" value="false"/>
+		<item key="SmartImportRootWizardPage.STORE_CLOSE_IMPORTED" value="false"/>
+		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
+		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
 	</section>
 </section>

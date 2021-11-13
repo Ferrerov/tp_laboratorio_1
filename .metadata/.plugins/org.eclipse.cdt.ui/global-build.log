@@ -1,6 +1,5 @@
-19:05:34 **** Rebuild of configuration Debug for project TP_[1] - FERRERO VALENTIN ****
+20:46:35 **** Incremental Build of configuration Debug for project pruebaTp3 ****
 Info: Internal Builder is used for build
-gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\ingresoDeDatos.o" "..\\src\\ingresoDeDatos.c" 
-gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\TP_[1] - FERRERO VALENTIN.o" "..\\src\\TP_[1] - FERRERO VALENTIN.c" 
-gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\funciones.o" "..\\src\\funciones.c" 
-gcc -o "TP_[1] - FERRERO VALENTIN.exe" "src\\TP_[1] - FERRERO VALENTIN.o" "src\\funciones.o" "src\\ingresoDeDatos.o" 
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o main.o "..\\main.c" 
+gcc "-LC:\\Users\\valen\\Desktop\\UTN\\1° Cuatrimestre\\Programacion\\Eclipse\\TP3\\eclipse_tp3_v3\\eclipse_tp3_v3\\tp3_windows" -o pruebaTp3.exe Controller.o Employee.o Input.o main.o parser.o -lLinkedList 
+Info: Nothing to build for pruebaTp3

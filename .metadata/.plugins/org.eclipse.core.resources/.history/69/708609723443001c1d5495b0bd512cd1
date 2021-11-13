@@ -1,0 +1,96 @@
+#include "parser.h"
+
+/** \brief Parsea los datos los datos de los empleados desde el archivo data.csv (modo texto).
+ *
+ * \param path char*
+ * \param pArrayListEmployee LinkedList*
+ * \return int
+ *
+ */
+int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
+{
+	int retorno = -1;
+	int cantidad;
+	char buffer1[20];
+	char buffer2[128];
+	char buffer3[20];
+	char buffer4[20];
+
+	Employee* pNuevoEmpleado;
+	//FILE* ultimoIdTxt;
+
+	if(pArrayListEmployee != NULL)
+	{
+		fscanf(pFile, "%[^,],%[^,],%[^,],%[^\n]\n", buffer1, buffer2, buffer3, buffer4);
+
+		while( !feof(pFile))
+		{
+			cantidad = fscanf(pFile, "%[^,],%[^,],%[^,],%[^\n]\n", buffer1, buffer2, buffer3, buffer4);
+			if(cantidad < 4)
+			{
+				break;
+			}
+
+			pNuevoEmpleado = employee_newParametros(buffer1, buffer2, buffer3, buffer4);
+			if(pNuevoEmpleado != NULL)
+			{
+				ll_add(pArrayListEmployee, pNuevoEmpleado);
+				retorno = 0;
+			}
+		}
+	}
+/*
+	ultimoIdTxt = fopen("ultimoId.txt" , "r");
+	if(ultimoIdTxt )
+*/
+    return retorno;
+}
+
+/** \brief Parsea los datos los datos de los empleados desde el archivo data.csv (modo binario).
+ *
+ * \param path char*
+ * \param pArrayListEmployee LinkedList*
+ * \return int
+ *
+ */
+int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
+{
+	int retorno = -1;
+	int cantidad;
+	Employee *auxEmpleado;
+	//Employee *pEmpleado = NULL;
+
+	if(pArrayListEmployee != NULL)
+	{
+		do
+		{
+			auxEmpleado = employee_new();
+			if(auxEmpleado != NULL)
+			{
+				cantidad = fread(auxEmpleado, sizeof(Employee), 1, pFile);
+				if(cantidad == 1)
+				{
+					ll_add(pArrayListEmployee, auxEmpleado);
+					retorno = 0;
+				}
+				else
+				{
+					employee_delete(auxEmpleado);
+				}
+			}
+		}while(!feof(pFile));
+	}
+    return retorno;
+}
+
+int parser_EmployeeToText(FILE* pFile , LinkedList* pArrayListEmployee)
+{
+
+	return 1;
+}
+
+int parser_EmployeeToBinary(FILE* pFile , LinkedList* pArrayListEmployee)
+{
+
+	return 1;
+}
