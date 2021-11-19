@@ -15,14 +15,14 @@ static int addNode(LinkedList* this, int nodeIndex,void* pElement);
  */
 LinkedList* ll_newLinkedList(void)
 {
-    LinkedList* this = NULL;
-    this = (LinkedList *) malloc(sizeof(LinkedList));
-    if(this != NULL)
+    LinkedList* this = NULL;  //Creacion de variable tipo LinkedList
+    this = (LinkedList *) malloc(sizeof(LinkedList));  //Asignacion de memoria con malloc
+    if(this != NULL) //Verifica que se haya podido asignar la memoria
     {
-    	this->size = 0;
-    	this->pFirstNode = NULL;
+    	this->size = 0; //Inicializa el tamaño en 0
+    	this->pFirstNode = NULL; //Incializa la direccion de memoria en NULL
     }
-    return this;
+    return this; //Retorna la direccion de memoria del LinkedList
 }
 
 /** \brief Retorna la cantidad de elementos de la lista
@@ -36,7 +36,7 @@ int ll_len(LinkedList* this)
     int returnAux = -1;
 
     if(this != NULL){
-    	returnAux = this->size;
+    	returnAux = this->size; //Le asigna a la variable a retornar, el tamaño de la LinkedList
     }
     return returnAux;
 }
@@ -52,14 +52,14 @@ int ll_len(LinkedList* this)
  */
 static Node* getNode(LinkedList* this, int nodeIndex)
 {
-	Node *node = NULL;
+	Node *node = NULL;   //Creacion de un nuevo nodo
 
-	if(this != NULL && nodeIndex > -1 && nodeIndex < ll_len(this))
+	if(this != NULL && nodeIndex > -1 && nodeIndex < ll_len(this)) //Verifica que LinkedList exista y que el indice sea valido
 	{
-		node = this->pFirstNode;
-		for(int i=0; i < nodeIndex; i++)
+		node = this->pFirstNode; //Obtiene la direccion de memoria adonde apunta la cabecera
+		for(int i=0; i < nodeIndex; i++) //Recorre todos los nodos hasta llegar al indice indicado
 		{
-			node = node->pNextNode;
+			node = node->pNextNode; //Cuando encuentra el elemento en el indice indicado asigna la direccion de memoria
 		}
 	}
     return node;
@@ -94,24 +94,24 @@ static int addNode(LinkedList* this, int nodeIndex,void* pElement)
     Node *newNode = NULL;
     Node *auxNode = NULL;
 
-    if(this != NULL && nodeIndex >= 0 && nodeIndex <= ll_len(this))
+    if(this != NULL && nodeIndex >= 0 && nodeIndex <= ll_len(this)) //Verifica que la LinkedList exista y que el indice sea valido
     {
-    	newNode = (Node*)malloc(sizeof(Node));
+    	newNode = (Node*)malloc(sizeof(Node)); //Asigna espacio en memoria al nuevo nodo
     	if(newNode != NULL)
     	{
     		if(nodeIndex != 0)
     		{
-    			auxNode = getNode(this, nodeIndex - 1);
-    			newNode->pNextNode = auxNode->pNextNode;
-    			auxNode->pNextNode = newNode;
+    			auxNode = getNode(this, nodeIndex - 1); //Busca el nodo anterior al indice especificado
+    			newNode->pNextNode = auxNode->pNextNode; //Al nuevo nodo le asigna el pNextNode del nodo anterior
+    			auxNode->pNextNode = newNode; //Al nodo anterior le asigna la direccion de memoria del nuevo nodo
     		}
     		else
     		{
-    			newNode->pNextNode = this->pFirstNode;
-    			this->pFirstNode = newNode;
+    			newNode->pNextNode = this->pFirstNode; //Al pNextNode del nuevo nodo le asigna el pFirstNode de la cabecera
+    			this->pFirstNode = newNode; //Al pFirstNode del nuevo nodo le asigna la direccion de memoria del nuevo nodo
     		}
-    		newNode->pElement = pElement;
-    		this->size++;
+    		newNode->pElement = pElement; //Le asigna el elemento al nueov nodo
+    		this->size++; //Suma en uno el tamaño de la lista
     		returnAux = 0;
     	}
     }
@@ -146,7 +146,7 @@ int ll_add(LinkedList* this, void* pElement)
 
     if(this != NULL)
     {
-    	addNode(this, ll_len(this), pElement);
+    	addNode(this, ll_len(this), pElement); //Añade un nuevo nodo con los parametros pasados al final de LinkedList
     	returnAux = 0;
     }
 
@@ -166,12 +166,12 @@ void* ll_get(LinkedList* this, int index)
     void* returnAux = NULL;
     Node *pNode = NULL;
 
-    if(this != NULL && index >= 0 && index < ll_len(this))
+    if(this != NULL && index >= 0 && index < ll_len(this)) //Verifica que LinkedList exista y que el indice sea valido
     {
     	pNode = getNode(this, index);
     	if(pNode != NULL)
     	{
-    		returnAux = pNode->pElement;
+    		returnAux = pNode->pElement; //Retorna el elemento que esta en el indice especificado
     	}
     }
 
@@ -193,12 +193,12 @@ int ll_set(LinkedList* this, int index,void* pElement)
     int returnAux = -1;
     Node *pNode = NULL;
 
-    if(this != NULL && index >= 0 && index < ll_len(this))
+    if(this != NULL && index >= 0 && index < ll_len(this)) //Verifica que LinkedList exista y que el indice sea valido
     {
     	pNode = getNode(this, index);
     	if(pNode != NULL)
     	{
-    		pNode->pElement = pElement;
+    		pNode->pElement = pElement; //Le asigna al pElement del nodo especificado un elemento pasado por parametro
     		returnAux = 0;
     	}
     }
@@ -533,33 +533,38 @@ LinkedList* ll_clone(LinkedList* this)
  */
 int ll_sort(LinkedList* this, int (*pFunc)(void* ,void*), int order)
 {
-    int returnAux =-1;
-    int len;
-    void *one;
-    void *two;
-    void *aux;
-    int result;
+	int returnAux = -1;
+	int len;
+	Node *auxNodeOne;
+	Node *auxNodeTwo;
+	void *auxElement;
+	int result;
 
-    len = ll_len(this);
-    if(this != NULL && order >= 0 && order <=1 && pFunc != NULL) //Verifica que LinkedList y pFunc no sean NULL y que el orden sea 1 o 2
-    {
-    	for(int i=0; i<len-1; i++) //Recorre LinkedList hasta la anteultima posicion para comparar
-    	{
-    		for(int j=i+1; j<len; j++)  	//Recorre LinkedList desde la posicion siguiente al primer elemento
-    		{
-        		one = ll_get(this, i); 		//Obtiene el elemento del nodo en i
-    			two = ll_get(this, j); 		//Obtiene el elemento del nodo en j
-    			result = pFunc(one,two);	//Obtiene el resultado de la comparacion entre ambos elementos
-    			if((order == 0 && result < 0) || (order == 1 && result > 0 )) //Verifica que se den las condiciones para el swap
-    			{
-    				aux = one;
-    				ll_set(this, i, two);
-    				ll_set(this, j, aux);
-    				returnAux = 0;
-    			}
-    		}
-    	}
-    }
+	len = ll_len(this);
+	if(this != NULL && order >= 0 && order <=1 && pFunc != NULL) //Verifica que LinkedList y pFunc no sean NULL y que el orden sea 1 o 2
+	{
+		auxNodeOne = this->pFirstNode; //Inicializa el primer auxiliar en el primer nodo
+		for(int i=0; i<len-1; i++) //Recorre LinkedList hasta la anteultima posicion para comparar
+		{
+			auxNodeTwo = auxNodeOne->pNextNode; //Asigna al segundo auxiliar la posicion siguiente al primer auxiliar
+			for(int j=i+1; j<len; j++)  //Recorre LinkedList desde la posicion siguiente al primer elemento
+			{
+				result = pFunc(auxNodeOne->pElement, auxNodeTwo->pElement);  //Obtiene el resultado de la comparacion entre ambos elementos
+
+				if((order == 0 && result < 0) || (order == 1 && result > 0 ))  //Verifica que se den las condiciones para el swap
+				{
+					auxElement = auxNodeOne->pElement;
+					auxNodeOne->pElement = auxNodeTwo->pElement;
+					auxNodeTwo->pElement = auxElement;
+					returnAux = 0;
+				}
+				auxNodeTwo = auxNodeTwo->pNextNode; //Asigna al segundo auxiliar el nodo que le sigue
+			}
+			auxNodeOne = auxNodeOne->pNextNode; //Asigna al primer auxiliar el nodo que le sigue
+
+		}
+	}
+
     return returnAux;
 }
 
