@@ -1121,3 +1121,11 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 !MESSAGE Save operation warnings.
 !SUBENTRY 1 org.eclipse.core.resources 2 234 2021-11-20 09:07:47.212
 !MESSAGE The project description file (.project) for 'pruebas' was missing.  This file contains important information about the project.  A new project description file has been created, but some information about the project may have been lost.
+
+!ENTRY org.eclipse.core.resources 2 2 2021-11-20 09:55:21.523
+!MESSAGE Save operation warnings.
+!SUBENTRY 1 org.eclipse.core.resources 2 234 2021-11-20 09:55:21.523
+!MESSAGE The project description file (.project) for 'pruebas' was missing.  This file contains important information about the project.  A new project description file has been created, but some information about the project may have been lost.
+
+!ENTRY org.eclipse.cdt.core 1 0 2021-11-20 09:55:22.144
+!MESSAGE Indexed 'TP3 + TP4' (6 sources, 28 headers) in 0.293 sec: 1,915 declarations; 3,909 references; 0 unresolved inclusions; 0 syntax errors; 0 unresolved names (0 %)
