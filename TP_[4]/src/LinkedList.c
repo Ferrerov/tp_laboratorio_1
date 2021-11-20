@@ -53,8 +53,10 @@ int ll_len(LinkedList* this)
 static Node* getNode(LinkedList* this, int nodeIndex)
 {
 	Node *node = NULL;   //Creacion de un nuevo nodo
+	int len;
 
-	if(this != NULL && nodeIndex > -1 && nodeIndex < ll_len(this)) //Verifica que LinkedList exista y que el indice sea valido
+	len = ll_len(this);
+	if(this != NULL && nodeIndex > -1 && nodeIndex < len) //Verifica que LinkedList exista y que el indice sea valido
 	{
 		node = this->pFirstNode; //Obtiene la direccion de memoria adonde apunta la cabecera
 		for(int i=0; i < nodeIndex; i++) //Recorre todos los nodos hasta llegar al indice indicado
@@ -93,8 +95,10 @@ static int addNode(LinkedList* this, int nodeIndex,void* pElement)
     int returnAux = -1;
     Node *newNode = NULL;
     Node *auxNode = NULL;
+    int len;
 
-    if(this != NULL && nodeIndex >= 0 && nodeIndex <= ll_len(this)) //Verifica que la LinkedList exista y que el indice sea valido
+    len = ll_len(this);
+    if(this != NULL && nodeIndex >= 0 && nodeIndex <= len) //Verifica que la LinkedList exista y que el indice sea valido
     {
     	newNode = (Node*)malloc(sizeof(Node)); //Asigna espacio en memoria al nuevo nodo
     	if(newNode != NULL)
@@ -143,10 +147,12 @@ int test_addNode(LinkedList* this, int nodeIndex,void* pElement)
 int ll_add(LinkedList* this, void* pElement)
 {
     int returnAux = -1;
+    int index;
 
     if(this != NULL)
     {
-    	addNode(this, ll_len(this), pElement); //Añade un nuevo nodo con los parametros pasados al final de LinkedList
+    	index = ll_len(this);
+    	addNode(this, index, pElement); //Añade un nuevo nodo con los parametros pasados al final de LinkedList
     	returnAux = 0;
     }
 
@@ -165,8 +171,10 @@ void* ll_get(LinkedList* this, int index)
 {
     void* returnAux = NULL;
     Node *pNode = NULL;
+    int len;
 
-    if(this != NULL && index >= 0 && index < ll_len(this)) //Verifica que LinkedList exista y que el indice sea valido
+	len = ll_len(this);
+    if(this != NULL && index >= 0 && index < len) //Verifica que LinkedList exista y que el indice sea valido
     {
     	pNode = getNode(this, index);
     	if(pNode != NULL)
@@ -192,8 +200,10 @@ int ll_set(LinkedList* this, int index,void* pElement)
 {
     int returnAux = -1;
     Node *pNode = NULL;
+    int len;
 
-    if(this != NULL && index >= 0 && index < ll_len(this)) //Verifica que LinkedList exista y que el indice sea valido
+	len = ll_len(this);
+    if(this != NULL && index >= 0 && index < len) //Verifica que LinkedList exista y que el indice sea valido
     {
     	pNode = getNode(this, index);
     	if(pNode != NULL)
@@ -220,8 +230,10 @@ int ll_remove(LinkedList* this,int index)
     int returnAux = -1;
     Node *pNode = NULL;
     Node *auxNode = NULL;
+    int len;
 
-    if(this != NULL && index >= 0 && index < ll_len(this)) //Verifica que la LinkedList no sea nula y que el indice sea valido
+    len = ll_len(this);
+    if(this != NULL && index >= 0 && index < len) //Verifica que la LinkedList no sea nula y que el indice sea valido
     {
     	pNode = getNode(this, index); //Nodo a eliminar
     	if(pNode != NULL)
@@ -302,13 +314,15 @@ int ll_indexOf(LinkedList* this, void* pElement)
 {
     int returnAux = -1;
     int len;
+    void *auxElement;
 
     len = ll_len(this);
     if(this != NULL && len > -1)
     {
     	for(int i=0; i < len; i++) //Recorre todos los nodos hasta llegar a una coincidencia
     	{
-    		if(ll_get(this, i) == pElement) //Obtiene el pElement y lo compara con el pElement pasado por parametro
+    		auxElement = ll_get(this, i);
+    		if(auxElement == pElement) //Obtiene el pElement y lo compara con el pElement pasado por parametro
     		{
     			returnAux = i; //Si son iguales, sale del for y devuelve el indice
     			break;
@@ -407,6 +421,7 @@ int ll_contains(LinkedList* this, void* pElement)
 {
     int returnAux = -1;
     int len;
+    void *auxElement;
 
     len = ll_len(this);
     if(this != NULL && len > -1) //Verifica que la LinkedList exista y que tenga por lo menos un nodo
@@ -414,7 +429,8 @@ int ll_contains(LinkedList* this, void* pElement)
     	returnAux = 0;
     	for(int i=0; i<len ;i++) //Recorre la lista hasta el ultimo elemento o hasta encontrar el elemento
     	{
-    		if(ll_get(this, i) == pElement) //Obtiene el pElement del indice especificado y lo compara con el pElement pasado por parametro
+    		auxElement = ll_get(this, i);
+    		if(auxElement == pElement) //Obtiene el pElement del indice especificado y lo compara con el pElement pasado por parametro
     		{
     			returnAux = 1;  //Si lo encuentra, significa que lo contiene, devuelve 1 y sale del for
     			break;
