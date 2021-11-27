@@ -10,7 +10,7 @@
 
 #include "ArrayEmployees.h"
 
-#define LEN 3
+#define LEN 1000
 #define RETRIES 3
 
 int main(void)
@@ -21,8 +21,9 @@ int main(void)
 	eEmployee employee[LEN];
 
     initEmployees(employee, LEN);
-    int id;
+    int ultimoId = 0;
     int flagAdd = -1;
+    int idEmpleado;
 
 	do{
 		    	printf("\n1. Dar de alta un empleado.\n");
@@ -33,14 +34,15 @@ int main(void)
 		    	    			"    2) Total y promedio de salarios, y cuantos empleados superan el salario promedio\n");
 		    	printf("5. Salir.\n");
 
-		    	getNumber(&response, "\nIngrese una opción: ", "\nError, ingrese una opción válida: ", 1, 11, INT_MAX);
+		    	GetInt(&response, "\nIngrese una opción: ", "\nError, ingrese una opción válida: ", 1, 11, INT_MAX);
 
 		    	switch(response){
 		    	    case 1:
 		    	    	printf("Usted ha seleccionado la opción 1: Dar de alta un empleado.\n");
-		    	    	if(addEmployee(employee, LEN, &id) == 0)
+		    	    	if(addEmployee(employee, LEN, ultimoId, &idEmpleado) == 0)
 		    	    	{
-			    	    	printf("\nEl ID del nuevo empleado es: %d", id);
+		    	    		ultimoId = idEmpleado;
+			    	    	printf("\nEl ID del nuevo empleado es: %d", idEmpleado);
 			    	    	flagAdd = 0;
 		    	    	}
 		    	    	else
@@ -77,14 +79,14 @@ int main(void)
 		    	    	printf("Usted ha seleccionado la opción 4: Informar:\n"
 		    	    			"    1) Listado de empleados.\n"
 		    	    			"    2) Total y promedio de salarios, y cuantos empleados superan el salario promedio\n");
-		    	    	organizeByLastName(employee, LEN);
-		    	    	if(flagAdd != 0 && printEmployeeList(employee, LEN) != 0)
+		    	    	if(flagAdd == 0 && organizeByLastName(employee, LEN) == 0 && printEmployeeList(employee, LEN) == 0)
 		    	    	{
-		    	    		printf("No hay empleados que mostrar. \n");
+
+		    	    		salaryAverageList(employee, LEN);
 		    	    	}
 		    	    	else
 		    	    	{
-		    	    		salaryAverageList(employee, LEN);
+		    	    		printf("No hay empleados que mostrar. \n");
 		    	    	}
 		    	    	break;
 		    	    case 5:
@@ -94,6 +96,9 @@ int main(void)
 				    	printf("Error, seleccione una opción de menu válida. \n");
 		    	    	break;
 		    	}
+		    	printf("\n************Presione enter para contirnuar************\n");
+		    	fflush(stdin);
+		    	getchar();
 		    }while(response != 5);
 	return EXIT_SUCCESS;
 }

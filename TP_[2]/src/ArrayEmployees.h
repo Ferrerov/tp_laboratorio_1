@@ -18,7 +18,7 @@ typedef struct
 
 void initEmployees(eEmployee employee[], int len);
 
-int addEmployee(eEmployee employee[], int len, int* pIdEmployee);
+int addEmployee(eEmployee employee[], int len, int ultimoId, int* pIdEmployee);
 
 int findEmployeeById(eEmployee employee[], int len, int retries, int* index);
 

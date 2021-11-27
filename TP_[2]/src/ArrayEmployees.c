@@ -8,7 +8,7 @@ void initEmployees(eEmployee employee[], int len)
 	}
 }
 
-int addEmployee(eEmployee employee[], int len, int* pIdEmployee)
+int addEmployee(eEmployee employee[], int len, int ultimoId, int* pIdEmployee)
 {
 	int validation = -1;
 
@@ -16,20 +16,17 @@ int addEmployee(eEmployee employee[], int len, int* pIdEmployee)
 	{
 		if(employee[i].isEmpty == EMPTY)
 		{
-			*pIdEmployee = i + 1;
-			getString("\nIngrese el nombre del empleado: ", employee[i].name, len);
-			getString("\nIngrese el apellido del empleado: ", employee[i].lastName, len);
-			if(getFloat(&employee[i].salary, "\nIngrese el salario del empleado: ", "\nError, ingrese un salario válido: ", 1, INT_MAX, 5) != 0)
+			if(GetString( employee[i].name,"\nIngrese el nombre del empleado: ","Error, ingrese un nombre válido: ", 4) == 0 &&
+			GetString( employee[i].lastName,"Ingrese el apellido del empleado: ","Error, ingrese un apellido válido: ", 4) == 0 &&
+			GetFloat(&employee[i].salary, "Ingrese el salario del empleado: ", "\nError, ingrese un salario válido: ", 1, INT_MAX, 5) == 0 &&
+			GetInt(&employee[i].sector, "Ingrese el sector del empleado: ", "\nError, ingrese un sector válido: ", 1, INT_MAX, 5) == 0)
 			{
+				employee[i].id = ultimoId + 1;
+				*pIdEmployee = employee[i].id;
+				employee[i].isEmpty = OCCUPIED;
+				validation = 0;
 				break;
 			}
-			if(getNumber(&employee[i].sector, "\nIngrese el sector del empleado: ", "\nError, ingrese un sector válido: ", 1, INT_MAX, 5) != 0)
-			{
-				break;
-			}
-			employee[i].isEmpty = OCCUPIED;
-			validation = 0;
-			break;
 		}
 	}
 	return validation;
@@ -44,7 +41,7 @@ int findEmployeeById(eEmployee employee[], int len, int retries, int* index)
 	{
 		retries--;
 
-		getNumber(&idFind, "\nIngrese el ID del empleado: ", "\nError, ID fuera de rango. Ingrese nuevamente: ", 1, len, 5);
+		GetInt(&idFind, "\nIngrese el ID del empleado: ", "\nError, ID fuera de rango. Ingrese nuevamente: ", 1, len, 5);
 
 		for(int i = 0; i < len; i++)
 		{
@@ -78,26 +75,26 @@ int modifyEmployee(eEmployee employee[], int len, int retries)
 					"\n2. Apellido "
 					"\n3. Salario "
 					"\n4. Sector");
-			getNumber(&response, "\nIngrese una opción: ", "\nError, ingrese una opción válida: ", 1, 11, INT_MAX);
+			GetInt(&response, "\nIngrese una opción: ", "\nError, ingrese una opción válida: ", 1, 11, INT_MAX);
 
 			switch(response)
 			{
 			case 1:
-				getString("\nIngrese el nombre del empleado: ", employee[index].name, len);
+				GetString( employee[index].name,"\nIngrese el nombre del empleado: ","Error, ingrese un nombre válido: ", 4);
 				validation = 0;
 				break;
 			case 2:
-				getString("\nIngrese el apellido del empleado: ", employee[index].lastName, len);
+				GetString( employee[index].lastName,"\nIngrese el apellido del empleado: ","Error, ingrese un apellido válido: ", 4);
 				validation = 0;
 				break;
 			case 3:
-				if(getFloat(&employee[index].salary, "\nIngrese el salario del empleado: ", "\nError, ingrese un salario válido: ", 1, INT_MAX, 5) == 0)
+				if(GetFloat(&employee[index].salary, "\nIngrese el salario del empleado: ", "\nError, ingrese un salario válido: ", 1, INT_MAX, 5) == 0)
 				{
 					validation = 0;
 				}
 				break;
 			case 4:
-				if(getNumber(&employee[index].sector, "\nIngrese el sector del empleado: ", "\nError, ingrese un sector válido: ", 1, INT_MAX, 5) == 0)
+				if(GetInt(&employee[index].sector, "\nIngrese el sector del empleado: ", "\nError, ingrese un sector válido: ", 1, INT_MAX, 5) == 0)
 				{
 					validation = 0;
 				}
@@ -115,26 +112,11 @@ int removeEmploye(eEmployee employee[], int len, int retries)
 
 	if(findEmployeeById(employee, len, retries, &index) ==0)
 	{
-		printf("\nEsta seguro que desea dar de baja al cliente? (s/n): ");
-		fflush(stdin);
-		scanf("%c", &response);
-		while(!(response == 's' || response == 'n'))
-		{
-			printf("\nError, ingrese una opción válida: ");
-			printf("\nEsta seguro que desea dar de baja al cliente? (s/n)");
-			fflush(stdin);
-			scanf("%c", &response);
-		}
-		if(response == 's')
+		if(GetYesNo("\nEsta seguro que desea dar de baja al cliente? (s/n): ", "\nError, ingrese una opción válida: ", &response, 4) == 0 &&
+				response == 's')
 		{
 			employee[index].isEmpty = EMPTY;
 			validation = 0;
-		}
-		else
-		{
-			printf("\nNo se ha podido dar de baja, se ha cancelado la operación. ");
-			printf("\nPulse una tecla para continuar");
-			getchar();
 		}
 	}
 	return validation;
@@ -175,11 +157,8 @@ int printEmployee(eEmployee employee)
 {
 	int validation = -1;
 
-	if(employee.isEmpty == OCCUPIED)
-	{
-		printf("\n|%-6d|%-30s|%-30s|%-11.2f|%-6d|",employee.id,employee.name,employee.lastName,employee.salary,employee.sector);
-		validation = 0;
-	}
+	printf("\n|%*d|%*s|%*s|%*.2f|%*d|", -5, employee.id, -20, employee.name,-20, employee.lastName,-11 , employee.salary, -6, employee.sector);
+	validation = 0;
 
 	return validation;
 }
@@ -187,18 +166,16 @@ int printEmployee(eEmployee employee)
 int printEmployeeList(eEmployee employee[], int len)
 {
 	int validation = -1;
-	int flagTitles = -1;
 
 	for(int i = 0; i < len; i++)
 	{
-		if(printEmployee(employee[i]) == 0)
+		if(employee[i].isEmpty == OCCUPIED)
 		{
-			if(flagTitles != 0)
-			{
-				printf("\n|%*s|%*s|%*s|%*s|%*s", -6, "ID EMPLEADO", -30, "NOMBRE",-30,"APELLIDO",-11 ,"SALARIO", -6,"SECTOR");
-				printf("\n-------------------------------------------------------");
-				flagTitles = 0;
-			}
+			printf("\n--------------------------------------------------------------------");
+			printf("\n|%*s|%*s|%*s|%*s|%*s|", -5, "ID", -20, "NOMBRE",-20, "APELLIDO",-11 , "SALARIO",-6, "SECTOR");
+			printf("\n--------------------------------------------------------------------");
+			printEmployee(employee[i]);
+			printf("\n|------------------------------------------------------------------|");
 			validation = 0;
 		}
 	}
@@ -252,8 +229,8 @@ int salaryAverageList(eEmployee employee[], int len)
 
 	if(salaryAverage(employee, len, &average, &total, &counter) == 0)
 	{
-		printf("\nEL total de los salario es de: %.2f", total);
-		printf("\nEL promedio de los salario es de: %.2f", average);
+		printf("\nEL total de los salarios es de: %.2f", total);
+		printf("\nEL promedio de los salarios es de: %.2f", average);
 		printf("\nLa cantidad de empleados que superan el salario promedio es de: %d", counter);
 	}
 

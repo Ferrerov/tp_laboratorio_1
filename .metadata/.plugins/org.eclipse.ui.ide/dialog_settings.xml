@@ -7,6 +7,7 @@
 		<item key="WizardProjectsImportPage.STORE_CLOSE_CREATED_PROJECTS_ID" value="false"/>
 		<item key="WizardProjectsImportPage.STORE_HIDE_CONFLICTING_PROJECTS_ID" value="false"/>
 		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
+			<item value="C:\Users\valen\Desktop\UTN\1° Cuatrimestre\Programacion\TP\TP3 + TP4"/>
 			<item value="C:\Users\valen\Desktop\UTN\1° Cuatrimestre\Programacion\Eclipse\TP4"/>
 			<item value="C:\Users\valen\Desktop\UTN\1° Cuatrimestre\Programacion\Eclipse\TP3\eclipse_tp3_v3\eclipse_tp3_v3\tp3_windows"/>
 			<item value="C:\Users\valen\Downloads\TP3\eclipse_tp3_v3\eclipse_tp3_v3\tp3_windows"/>
